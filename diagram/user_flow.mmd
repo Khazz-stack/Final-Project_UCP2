@@ -1,0 +1,24 @@
+flowchart TD
+    Start([Mulai]) --> CheckToken{Sudah Punya Token JWT?}
+
+    %% Path Alur Auth
+    CheckToken -- Belum --> LoginStep[Kirim Request POST /api/users/login]
+    LoginStep --> CheckCreds{Kredensial Valid?}
+    CheckCreds -- Tidak --> ErrLogin[Return Response 401 Unauthorized]
+    ErrLogin --> End1([Selesai])
+    CheckCreds -- Ya --> SendToken[Return JWT Access Token]
+    SendToken --> SaveToken[Simpan Token di Header Authorization]
+
+    %% Path Alur Akses Endpoints
+    CheckToken -- Sudah --> SendRequest[Kirim Request API + Header 'Bearer Token']
+    SaveToken --> SendRequest
+
+    SendRequest --> Middleware[Auth Middleware Validation]
+    Middleware --> CheckValid{Token Valid & Tidak Expired?}
+
+    CheckValid -- Tidak --> ErrAuth[Return Response 401 / Token Invalid]
+    ErrAuth --> End2([Selesai])
+
+    CheckValid -- Ya --> ExecRoute[Eksekusi Controller & Query Supabase Database]
+    ExecRoute --> SuccessResponse[Return Response JSON Status 200/201]
+    SuccessResponse --> End3([Selesai])
