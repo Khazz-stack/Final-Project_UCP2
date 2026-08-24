@@ -2,7 +2,6 @@ const { Sequelize } = require('sequelize');
 const pg = require('pg');
 require('dotenv').config();
 
-// Vercel menyuntikkan POSTGRES_URL secara otomatis
 const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
 
 const sequelize = dbUrl
@@ -13,7 +12,7 @@ const sequelize = dbUrl
       dialectOptions: {
         ssl: {
           require: true,
-          rejectUnauthorized: false
+          rejectUnauthorized: false // Mengizinkan SSL Supabase tanpa mengecek CA chain
         }
       }
     })
