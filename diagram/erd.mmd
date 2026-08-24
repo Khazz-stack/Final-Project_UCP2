@@ -1,0 +1,27 @@
+erDiagram
+    USER {
+        int id PK
+        string username
+        string password
+        datetime createdAt
+        datetime updatedAt
+    }
+    
+    KATEGORI {
+        int id PK
+        string nama_kategori
+        datetime createdAt
+        datetime updatedAt
+    }
+    
+    MENU {
+        int id PK
+        string nama_menu
+        int harga
+        int stok
+        int kategori_id FK
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    KATEGORI ||--o{ MENU : "mempunyai (1 to N)"
