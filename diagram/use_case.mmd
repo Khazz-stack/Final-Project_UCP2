@@ -1,0 +1,34 @@
+flowchart LR
+    Actor(("User / Admin"))
+
+    subgraph System ["Coffee Shop API System"]
+        UC1(["Register Account"])
+        UC2(["Login & Get JWT Token"])
+        
+        UC3(["Kelola Kategori (CRUD)"])
+        UC3a["GET /api/kategori"]
+        UC3b["POST /api/kategori"]
+        UC3c["PUT /api/kategori/:id"]
+        UC3d["DELETE /api/kategori/:id"]
+
+        UC4(["Kelola Menu (CRUD)"])
+        UC4a["GET /api/menu"]
+        UC4b["POST /api/menu"]
+        UC4c["PUT /api/menu/:id"]
+        UC4d["DELETE /api/menu/:id"]
+    end
+
+    Actor --> UC1
+    Actor --> UC2
+    Actor --> UC3
+    Actor --> UC4
+
+    UC3 -.-> UC3a
+    UC3 -.-> UC3b
+    UC3 -.-> UC3c
+    UC3 -.-> UC3d
+
+    UC4 -.-> UC4a
+    UC4 -.-> UC4b
+    UC4 -.-> UC4c
+    UC4 -.-> UC4d
