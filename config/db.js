@@ -1,8 +1,10 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // WAJIB DI BARIS PERTAMA
+
 const { Sequelize } = require('sequelize');
 const pg = require('pg');
 require('dotenv').config();
 
-const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
+const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.POSTGRES_PRISMA_URL;
 
 const sequelize = dbUrl
   ? new Sequelize(dbUrl, {
@@ -12,7 +14,7 @@ const sequelize = dbUrl
       dialectOptions: {
         ssl: {
           require: true,
-          rejectUnauthorized: false // Mengizinkan SSL Supabase tanpa mengecek CA chain
+          rejectUnauthorized: false
         }
       }
     })
